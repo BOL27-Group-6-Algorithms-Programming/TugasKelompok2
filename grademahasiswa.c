@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-char grade(float nilai)
+char grade(float nilai) // Function parameters to convert numeric score into a alphabetic grade 
 {
     if (nilai <= 55.00)
     {
@@ -24,7 +24,7 @@ char grade(float nilai)
         return 'A';
     }
 }
-struct dataMahasiswa
+struct dataMahasiswa  // Collection data of student
 {
     char nama[50];
     float quis;
@@ -39,17 +39,17 @@ struct dataMahasiswa
 int main()
 {
     struct dataMahasiswa mahasiswa[100];
-    int perulangan = 0;
-    char opsi;
-    bool lanjut = true;
-    bool isNilaiValid = true;
-    float rataRataAll = 0;
+    int perulangan = 0; // A variable to store how much the program has been iterated
+    char opsi; // A variable to store the action of the user
+    bool lanjut = true; // A boolean variable to store the choice of the user whether to continue inputting student data or not
+    bool isNilaiValid = true; // A variable to store if the score is valid or not
+    float rataRataAll = 0; 
 
     printf("\n=======================\n");
     printf("MASUKKAN DATA MAHASISWA\n");
     printf("=======================\n\n");
 
-    for (int i = 0; i < 100 && lanjut; i++)
+    for (int i = 0; i < 100 && lanjut; i++) // Create a loop for 100 times AND if lanjut boolean is true
     {
         printf("Masukkan nama mahasiswa: ");
         scanf(" %[^\n]%*c", mahasiswa[i].nama);
@@ -128,7 +128,7 @@ int main()
 
         perulangan++;
 
-        if (perulangan < 10 && opsi != 'y' && opsi != 'Y')
+        if (perulangan < 10 && opsi != 'y' && opsi != 'Y')  // If statement validator to check whether the user has met the requirement to stop inputting the data
         {
             printf("Masukkan minimal 10 data mahasiswa!\n");
         }
@@ -144,9 +144,9 @@ int main()
         mahasiswa[i].rataRata = (mahasiswa[i].quis + mahasiswa[i].tugas +
                                  mahasiswa[i].absensi + mahasiswa[i].praktek +
                                  mahasiswa[i].uas) /
-                                5;
+                                5; // A mathematic calculation to sum the avarage score
 
-        if (grade(mahasiswa[i].rataRata) == 'D' || grade(mahasiswa[i].rataRata) == 'E')
+        if (grade(mahasiswa[i].rataRata) == 'D' || grade(mahasiswa[i].rataRata) == 'E') // A if statement to check wheter the student is Pass or not
         {
             mahasiswa[i].isPass = false;
         }
