@@ -1,89 +1,179 @@
 #include <stdio.h>
-#include <string.h>
 #include <stdbool.h>
 
-struct Employee
+char grade(float nilai) // Function parameters to convert numeric score into a alphabetic grade 
 {
-    char name[50];
-    long int nip;
-    char address[100];
-    char phoneNum[20];
-    char position[20];
-    char degree[5];
-    float salary;
-    int overTime;
-    float overTimeSalary;
+    if (nilai <= 55.00)
+    {
+        return 'E';
+    }
+    else if (nilai <= 65.00)
+    {
+        return 'D';
+    }
+    else if (nilai <= 75.00)
+    {
+        return 'C';
+    }
+    else if (nilai <= 85.00)
+    {
+        return 'B';
+    }
+    else if (nilai <= 100.00)
+    {
+        return 'A';
+    }
+}
+struct dataMahasiswa  // Collection data of student
+{
+    char nama[50];
+    float quis;
+    float tugas;
+    float absensi;
+    float praktek;
+    float uas;
+    float rataRata;
+    bool isPass;
 };
 
 int main()
 {
-    printf("=========================================\n");
-    printf("      Program Penghitungan Gaji\n");
-    printf("=========================================\n");
+    struct dataMahasiswa mahasiswa[100];
+    int perulangan = 0; // A variable to store how much the program has been iterated
+    char opsi; // A variable to store the action of the user
+    bool lanjut = true; // A boolean variable to store the choice of the user whether to continue inputting student data or not
+    bool isNilaiValid = true; // A variable to store if the score is valid or not
+    float rataRataAll = 0; 
 
-    struct Employee employee;
-    bool isDegreeValid = true;
+    printf("\n=======================\n");
+    printf("MASUKKAN DATA MAHASISWA\n");
+    printf("=======================\n\n");
 
-    printf("Masukkan Nama Anda: ");
-    scanf(" %[^\n]", &employee.name);
-    printf("Masukkan NIP Anda: ");
-    scanf("%ld", &employee.nip);
-    printf("Masukkan Alamat Anda: ");
-    scanf(" %[^\n]", &employee.address);
-    printf("Masukkan Nomor Handphone Anda: ");
-    scanf(" %s", &employee.phoneNum);
-    printf("Masukkan Jabatan Anda: ");
-    scanf(" %[^\n]", &employee.position);
-    do{
-    printf("Masukkan Golongan Anda: ");
-    scanf(" %s", &employee.degree);
-    if (strcmp(employee.degree, "D1") == 0 || strcmp(employee.degree, "d1") == 0)
+    for (int i = 0; i < 100 && lanjut; i++) // Create a loop for 100 times AND if lanjut boolean is true
     {
-        employee.salary = 2500000;
-        employee.overTimeSalary = 10000;
-        isDegreeValid = true;
+        printf("Masukkan nama mahasiswa: ");
+        scanf(" %[^\n]%*c", mahasiswa[i].nama);
+        do
+        {
+            printf("Masukkan nilai quiz: ");
+            scanf(" %f", &mahasiswa[i].quis);
+            if (mahasiswa[i].quis <= 0 || mahasiswa[i].quis > 100)
+            {
+                printf("Harap masukkan nilai didalam jangkauan 1-100!\n");
+                isNilaiValid = false;
+            }
+            else
+            {
+                isNilaiValid = true;
+            }
+        } while (isNilaiValid == false);
+        do
+        {
+            printf("Masukkan nilai tugas: ");
+            scanf(" %f", &mahasiswa[i].tugas);
+            if (mahasiswa[i].tugas <= 0 || mahasiswa[i].tugas > 100)
+            {
+                printf("Harap masukkan nilai didalam jangkauan 1-100!\n");
+                isNilaiValid = false;
+            }
+            else
+            {
+                isNilaiValid = true;
+            }
+        } while (isNilaiValid == false);
+        do
+        {
+            printf("Masukkan nilai absensi: ");
+            scanf(" %f", &mahasiswa[i].absensi);
+            if (mahasiswa[i].absensi <= 0 || mahasiswa[i].absensi > 100)
+            {
+                printf("Harap masukkan nilai didalam jangkauan 1-100!\n");
+                isNilaiValid = false;
+            }
+            else
+            {
+                isNilaiValid = true;
+            }
+        } while (isNilaiValid == false);
+        do
+        {
+            printf("Masukkan nilai praktek: ");
+            scanf(" %f", &mahasiswa[i].praktek);
+            if (mahasiswa[i].praktek <= 0 || mahasiswa[i].praktek > 100)
+            {
+                printf("Harap masukkan nilai didalam jangkauan 1-100!\n");
+                isNilaiValid = false;
+            }
+            else
+            {
+                isNilaiValid = true;
+            }
+        } while (isNilaiValid == false);
+        do
+        {
+            printf("Masukkan nilai UAS: ");
+            scanf(" %f", &mahasiswa[i].uas);
+            if (mahasiswa[i].uas <= 0 || mahasiswa[i].uas > 100)
+            {
+                printf("Harap masukkan nilai didalam jangkauan 1-100!\n");
+                isNilaiValid = false;
+            }
+            else
+            {
+                isNilaiValid = true;
+            }
+        } while (isNilaiValid == false);
+        printf("\nApakah anda ingin memasukkan data mahasiswa lagi (Y/N)? ");
+        scanf(" %c", &opsi);
+
+        perulangan++;
+
+        if (perulangan < 10 && opsi != 'y' && opsi != 'Y')  // If statement validator to check whether the user has met the requirement to stop inputting the data
+        {
+            printf("Masukkan minimal 10 data mahasiswa!\n");
+        }
+        else if (opsi != 'Y' && opsi != 'y' && opsi != 'N' && opsi != 'n')
+        {
+            printf("Masukkan input yang valid!");
+        }
+        else if (opsi == 'N' || opsi == 'n')
+        {
+            lanjut = false;
+        }
+
+        mahasiswa[i].rataRata = (mahasiswa[i].quis + mahasiswa[i].tugas +
+                                 mahasiswa[i].absensi + mahasiswa[i].praktek +
+                                 mahasiswa[i].uas) /
+                                5; // A mathematic calculation to sum the avarage score
+
+        if (grade(mahasiswa[i].rataRata) == 'D' || grade(mahasiswa[i].rataRata) == 'E') // A if statement to check wheter the student is Pass or not
+        {
+            mahasiswa[i].isPass = false;
+        }
+        else
+        {
+            mahasiswa[i].isPass = true;
+        }
+
+        rataRataAll += mahasiswa[i].rataRata;
     }
-    else if (strcmp(employee.degree, "D2") == 0 || strcmp(employee.degree, "d2") == 0)
+
+    printf("\n==============REKAP NILAI MAHASISWA==============\n\n");
+    rataRataAll /= perulangan;
+    for (int i = 0; i < perulangan; i++)
     {
-        employee.salary = 2000000;
-        employee.overTimeSalary = 5000;
-        isDegreeValid = true;
+        printf("Nama mahasiswa: %s\n", mahasiswa[i].nama);
+        printf("Nilai Quiz: %.2f & Grade = %c\n", mahasiswa[i].quis, grade(mahasiswa[i].quis));
+        printf("Nilai Tugas: %.2f & Grade = %c\n", mahasiswa[i].tugas, grade(mahasiswa[i].tugas));
+        printf("Nilai Absensi: %.2f & Grade = %c\n", mahasiswa[i].absensi, grade(mahasiswa[i].absensi));
+        printf("Nilai Praktek: %.2f & Grade = %c\n", mahasiswa[i].praktek, grade(mahasiswa[i].praktek));
+        printf("Nilai UAS: %.2f & Grade = %c\n", mahasiswa[i].uas, grade(mahasiswa[i].uas));
+        printf("Rata-rata nilai: %.2f & Grade akhir = %c\n\n", mahasiswa[i].rataRata, grade(mahasiswa[i].rataRata));
+        mahasiswa[i].isPass ? printf("Status: Lulus\n\n") : printf("Status: Tidak Lulus\n\n");
     }
-    else if (strcmp(employee.degree, "D3") == 0 || strcmp(employee.degree, "d3") == 0)
-    {
-        employee.salary = 1500000;
-        employee.overTimeSalary = 2500;
-        isDegreeValid = true;
-    }else{
-        printf("Masukan golongan yang valid (D1, D2, D3)\n");
-        isDegreeValid = false;
-    }
-    }while(isDegreeValid == false);
-    
-    
-
-    printf("--------------------------------------------------\n");
-
-    printf("\nNIP              : %ld\n", employee.nip);
-    printf("Nama             : %s\n", employee.name);
-    printf("Alamat           : %s\n", employee.address);
-    printf("No HP            : %s\n", employee.phoneNum);
-    printf("Jabatan          : %s\n", employee.position);
-    printf("Golongan         : %s\n", employee.degree);
-    printf("Gaji Pokok       : Rp.%.2f\n", employee.salary);
-
-    printf("--------------------------------------------------\n");
-
-    printf("Masukkan NIP     : ");
-    scanf("%ld", &employee.nip);
-    printf("Masukkan Golongan: ");
-    scanf(" %s", &employee.degree);
-    printf("Masukkan Jam Lembur (DALAM JAM): ");
-    scanf("%d", &employee.overTime);
-    employee.overTimeSalary = employee.overTimeSalary * employee.overTime;
-
-    printf("--------------------------------------------------\n");
-    printf("Total Gaji Bulan Ini: Rp.%.2f\n", employee.salary + employee.overTimeSalary);
+    printf("==================================================\n\n");
+    printf("Jumlah mahasiswa: %d\n", perulangan);
+    printf("Rata rata nilai keseluruhan mahasiswa: %.2f\n\n", rataRataAll);
 
     return 0;
 }
